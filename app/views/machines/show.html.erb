@@ -13,7 +13,7 @@
 <p>
   <ul>
     <% @matches.each do |m| %>
-      <li><%= link_to "Match #{m.id}", tournament_match_path(m.id) %></li>
+      <li><%= link_to "#{m.tournament.name} - #{m.video_segment_start_time}", tournament_match_path(m.tournament_id, m.id) %></li>
     <% end %>
   </ul>
 </p>

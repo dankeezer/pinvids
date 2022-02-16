@@ -2,7 +2,7 @@
 
 <p>
   <ul>
-    <li>Tournament: <%= link_to @match.tournament.name, machine_path(@match.tournament.id) -%></li>
+    <li>Tournament: <%= link_to @match.tournament.name, tournament_path(@match.tournament.id) -%></li>
     <li>Machine: <%= link_to @match.machine.name, machine_path(@match.machine.id) -%></li>
     <li>Video Segment Start Time: <%= @match.video_segment_start_time -%></li>
     <li>Bracket: <%= @match.bracket -%></li>
