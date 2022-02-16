@@ -1,4 +1,4 @@
-class TournamentsController < ApplicationController
+class MatchesController < ApplicationController
   def index
     @tournaments = Tournament.all
 

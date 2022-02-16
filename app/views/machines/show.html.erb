@@ -1,0 +1,16 @@
+<h1><%= @machine.name %></h1>
+
+<p>
+  <ul>
+    <li>IPDB Page: <%= link_to @machine.ipdb_url, @machine.ipdb_url -%></li>
+  </ul>
+</p>
+
+<h2>Matches</h2>
+<p>
+  <ul>
+    <% @matches.each do |m| %>
+      <li><%= link_to "#{m.tournament.name} - #{m.video_segment_start_time}", m.video_url -%></li>
+    <% end %>
+  </ul>
+</p>

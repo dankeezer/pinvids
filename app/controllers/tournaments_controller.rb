@@ -5,7 +5,8 @@ class TournamentsController < ApplicationController
   end
 
   def show
-    @tournament = Tournament.find(params.id)
+    @tournament = Tournament.find(params[:id])
+    @matches = Match.where(tournament_id: params[:id]).sort_by(&:video_segment_start_time)
 
     render
   end

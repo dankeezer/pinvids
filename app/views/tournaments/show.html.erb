@@ -4,6 +4,24 @@
   <ul>
     <li>Video: <%= link_to @tournament.video_url, @tournament.video_url -%></li>
     <li>Video Duration: <%= @tournament.video_duration %></li>
-    <li>IFPA Tournament Page: <%= @tournament.ifpa_url %></li>
+    <li>IFPA Tournament Page: <%= link_to @tournament.ifpa_url, @tournament.ifpa_url %></li>
   </ul>
+</p>
+
+<h2>Matches</h2>
 <p>
+  <ul>
+    <% @matches.each do |m| %>
+      <li><%= link_to "#{m.video_segment_start_time} - #{m.machine.name}", m.video_url -%></li>
+    <% end %>
+  </ul>
+</p>
+
+<h2>Machines</h2>
+<p>
+  <ul>
+    <% @tournament.machines.each do |m| %>
+      <li><%= link_to m.name, machine_path(m) -%></li>
+    <% end %>
+  </ul>
+</p>
