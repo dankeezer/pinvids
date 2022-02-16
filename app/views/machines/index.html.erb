@@ -1,0 +1,8 @@
+<h1>Machines</h1>
+<p>
+  <ul id="machines">
+    <% @machines.each do |m| %>
+      <li><%= link_to m.name, { :action => 'show', :id => m.id } -%></li>
+    <% end %>
+  </ul>
+</p>

@@ -1,0 +1,8 @@
+<h1>Tournaments</h1>
+<p>
+  <ul id="tournaments">
+    <% @tournaments.each do |t| %>
+      <li><%= link_to t.name, { :action => 'show', :id => t.id } -%></li>
+    <% end %>
+  </ul>
+</p>

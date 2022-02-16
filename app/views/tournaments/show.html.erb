@@ -1,0 +1,9 @@
+<h1><%= @tournament.name %></h1>
+
+<p>
+  <ul>
+    <li>Video: <%= link_to @tournament.video_url, @tournament.video_url -%></li>
+    <li>Video Duration: <%= @tournament.video_duration %></li>
+    <li>IFPA Tournament Page: <%= @tournament.ifpa_url %></li>
+  </ul>
+<p>
