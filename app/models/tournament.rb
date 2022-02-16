@@ -12,6 +12,6 @@ class Tournament < ApplicationRecord
   end
 
   def machines
-    matches.map { |match| match.machine }.uniq.sort_by(&:name)
+    matches.map { |m| m.machine }.uniq.sort_by(&:name)
   end
 end

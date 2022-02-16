@@ -1,0 +1,10 @@
+<h1>Match <%= @match.id %></h1>
+
+<%= form_with model: @match, url: tournament_match_path do |form| %>
+  <p>Tournament: <%= form.collection_select :tournament_id, Tournament.order(:name), :id, :name %>
+  <p>Machine: <%= form.collection_select :machine_id, Machine.order(:name), :id, :name %>
+  <p>Video Segment Start Time: <%= form.text_field :video_segment_start_time %></p>
+  <p>Bracket: <%= form.select :bracket, Match.brackets.keys %></p>
+  <p>Invalidated? <%= @match.invalidated %></p>
+  <p><%= form.submit "Edit" %></p>
+<% end %>

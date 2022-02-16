@@ -12,16 +12,27 @@
 <p>
   <ul>
     <% @matches.each do |m| %>
-      <li><%= link_to "#{m.video_segment_start_time} - #{m.machine.name}", m.video_url -%></li>
+      <li><%= link_to "Match #{m.id}", tournament_match_path(m.id) %></li>
     <% end %>
   </ul>
 </p>
 
-<h2>Machines</h2>
+<h2>Machines Featured</h2>
 <p>
   <ul>
     <% @tournament.machines.each do |m| %>
       <li><%= link_to m.name, machine_path(m) -%></li>
+    <% end %>
+  </ul>
+</p>
+
+<h2>Vids</h2>
+<p>
+  <ul>
+    <% @matches.each do |m| %>
+      <li><%= link_to "#{m.video_segment_start_time} - #{m.machine.name}", m.video_url -%></br>
+        <iframe width="560" height="315" src="<%= m.video_embed_url %>" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </li>
     <% end %>
   </ul>
 </p>

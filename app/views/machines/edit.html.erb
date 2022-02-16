@@ -1,0 +1,11 @@
+<h1><%= @machine.name %></h1>
+
+<%= form_with model: @machine do |form| %>
+  <p>Name: <%= form.text_field :name %></p>
+  <p>IPDB ID: <%= form.number_field :ipdb_id %></p>
+  <p><%= form.submit "Edit" %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Back', { :action => 'show', :id => @machine.id } %>
+</p>
