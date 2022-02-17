@@ -2,7 +2,7 @@
 <p>
   <ul id="tournaments">
     <% @tournaments.each do |t| %>
-      <li><%= link_to t.name, { :action => 'show', :id => t.id } -%></li>
+      <li><%= link_to "#{t.event_started_at.strftime("%b %d, %Y")} - #{t.name}", { :action => 'show', :id => t.id } -%></li>
     <% end %>
   </ul>
 </p>

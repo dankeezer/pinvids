@@ -1,0 +1,11 @@
+<h1><%= @tournament.name %></h1>
+
+<%= form_with model: @tournament do |form| %>
+  <p>Name: <%= form.text_field :name %></p>
+  <p>Video ID: <%= form.text_field :video_id, placeholder: "thTdFzzRun8" %></p>
+  <p>Video Host: <%= form.text_field :video_host, placeholder: "youtube" %></p>
+  <p>Video Duration: <%= form.text_field :video_duration, placeholder: "HH:MM:SS" %></p>
+  <p>IFPA ID: <%= form.text_field :ifpa_id %></p>
+  <p>Event Date: <%= form.date_field :event_started_at %>
+  <p><%= form.submit "Edit" %></p>
+<% end %>

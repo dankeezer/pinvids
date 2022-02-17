@@ -2,7 +2,7 @@
 
 <p>
   <ul>
-    <li>Event Started At: <%= @tournament.event_started_at -%></li>
+    <li>Event Date: <%= @tournament.event_started_at.strftime("%b %d, %Y") -%></li>
     <li>Video: <%= link_to @tournament.video_url, @tournament.video_url -%></li>
     <li>Video Duration: <%= @tournament.video_duration %></li>
     <li>IFPA Tournament Page: <%= link_to @tournament.ifpa_url, @tournament.ifpa_url %></li>
