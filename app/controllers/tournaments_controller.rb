@@ -1,6 +1,6 @@
 class TournamentsController < ApplicationController
   def index
-    @tournaments = Tournament.all
+    @tournaments = Tournament.all.sort_by(&:event_started_at)
     render
   end
 

@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_15_040248) do
 
   create_table "matches", force: :cascade do |t|
     t.string "video_segment_start_time"
-    t.integer "bracket"
+    t.integer "bracket", default: 0
     t.boolean "invalidated", default: false
     t.integer "machine_id"
     t.integer "tournament_id"
@@ -52,8 +52,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_15_040248) do
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.string "video_id"
+    t.string "video_host"
     t.string "video_duration"
     t.integer "ifpa_id"
+    t.datetime "event_started_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

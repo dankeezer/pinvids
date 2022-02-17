@@ -2,8 +2,7 @@ class CreateMatches < ActiveRecord::Migration[7.0]
   def change
     create_table :matches do |t|
       t.string :video_segment_start_time
-      t.string :video_host
-      t.integer :bracket
+      t.integer :bracket, :default => 0
       t.boolean :invalidated, :default => false
       t.integer :machine_id
       t.integer :tournament_id

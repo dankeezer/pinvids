@@ -2,7 +2,13 @@ class Match < ApplicationRecord
   belongs_to :tournament
   belongs_to :machine
 
-  enum bracket: { qualifier: 0, quarterfinal: 1, semifinal: 2, final: 3 }
+  enum bracket: {
+    unknown: 0,
+    qualifier: 1,
+    quarterfinal: 2,
+    semifinal: 3,
+    final: 4
+  }
   validates :bracket, inclusion: { in: brackets.keys }
 
   def video_url
