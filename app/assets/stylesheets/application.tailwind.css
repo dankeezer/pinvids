@@ -2,17 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
-}
-
-*/
-
+/* Baseline Global Styles */
 @layer base {
+  html, body {
+    @apply bg-background;
+    @apply text-primary;
+  }
   h1 {
     @apply text-2xl;
   }
@@ -20,6 +15,10 @@
     @apply text-xl;
   }
   a {
-    @apply text-blue-700 underline;
+    @apply text-secondary;
+    @apply underline;
+  }
+  li + li {
+    @apply mt-1;
   }
 }
