@@ -1,6 +1,8 @@
 class Tournament < ApplicationRecord
   include PgSearch::Model
-  multisearchable against: [:name]
+  multisearchable against: :name,
+                  using: :trigram
+
 
   has_many :matches
 
