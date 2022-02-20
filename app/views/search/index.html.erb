@@ -1,8 +1,7 @@
 <h1>Welcome to PINVIDS</h1>
 
 <%= form_tag search_path, method: "get" do %>
-  <p><%= text_field_tag :search, nil, placeholder: "Search Machines, Tournaments ...", class: "form-control" %>
-  <p><%= submit_tag "", style: "display: none;" %></p>
+  <p><%= text_field_tag :query, nil, placeholder: "Search Machines, Tournaments ...", class: "form-control" %>
 <% end %>
 
 <% if @search_results.present? %>
