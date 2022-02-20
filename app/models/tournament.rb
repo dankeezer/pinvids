@@ -1,5 +1,9 @@
 class Tournament < ApplicationRecord
+  include PgSearch::Model
+  multisearchable against: [:name]
+
   has_many :matches
+
 
   def video_url
     "https://youtu.be/#{video_id}"
