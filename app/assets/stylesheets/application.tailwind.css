@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Baseline Global Styles */
+@layer base {
+  html, body {
+    @apply bg-background;
+    @apply text-primary;
+  }
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  a {
+    @apply text-secondary;
+    @apply underline;
+  }
+  li + li {
+    @apply mt-1;
+  }
+}

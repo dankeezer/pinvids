@@ -22,3 +22,16 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+## Init DB
+
+    $ brew services start postgresql
+    $ rake db:create
+    $ rake db:migrate
+    $ rake db:seed
+    
+## Dev
+
+    $ brew services start postgresql # if not started
+    $ ./bin/dev
