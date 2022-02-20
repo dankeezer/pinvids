@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root "welcome#show"
+  root "search#index"
+
+  get 'search' => 'search#index'
 
   resources "tournaments" do
     resources "matches"
