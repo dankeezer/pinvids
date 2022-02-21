@@ -7,10 +7,10 @@
 
 <script>
   // Super jank / prototype / proof-of-concept only, recommend using React component
-  const machines = <%= raw @machines.to_json %>;
-  const buildLine = (name) => `<a href="?query=${name}"><div class="m-1">${name}</div></a>`;
+  const machines = <%= raw @machines_and_tournaments.to_json %>;
+  const buildLine = (result) => `<a href="/${result[0]}/${result[2]}"><div class="m-1">${result[1]}</div></a>`;
   const onKeyUp = (value) => {
-    const filteredMachines = machines.filter(m => m.toLowerCase().includes(value.toLowerCase()));
+    const filteredMachines = machines.filter(m => m[1].toLowerCase().includes(value.toLowerCase()));
     document.getElementById('autocomplete-results').innerHTML = filteredMachines.map(buildLine).join('');
   };
 </script>
