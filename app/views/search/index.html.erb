@@ -1,0 +1,47 @@
+<div class="mt-6">
+  <%= form_tag search_path, method: "get" do %>
+    <%= search_field_tag :query, nil, autocomplete: "off", placeholder: "Search Machines, Tournaments ...", class: "form-control w-full", onkeyup: "onKeyUp(this.value)" %>
+  <% end %>
+</div>
+<div id="autocomplete-results" class="absolute bg-white w-full"></div>
+
+<script>
+  // Super jank / prototype / proof-of-concept only, recommend using React component
+  var onKeyUp = (value) => {
+    var xhr = new XMLHttpRequest();
+    const url = `/search?query=${value}`;
+    xhr.open("GET", url);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (value.length > 2) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+
+          var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="m-1">${m.name}</div></a>`;
+          var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="m-1">${t.name}</div></a>`;
+
+          resultArray = [].concat(json.machines.map(buildMachineLine), json.tournaments.map(buildTournamentLine))
+          document.getElementById('autocomplete-results').innerHTML = resultArray.join('');
+        };
+      };
+    };
+
+    xhr.send();
+  };
+</script>
+
+<div class="mt-6">
+  <h2>Machines (<%= @machines.count %>)</h2>
+  <ul class="mt-2">
+    <% @machines.each do |machine| %>
+      <li><%= link_to machine.name, machine %></li>
+    <% end %>
+  </ul>
+
+  <h2>Tournaments (<%= @tournaments.count %>)</h2>
+  <ul class="mt-2">
+    <% @tournaments.each do |tournament| %>
+      <li><%= link_to tournament.name, tournament %></li>
+    <% end %>
+  </ul>
+</div>
