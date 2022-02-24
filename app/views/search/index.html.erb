@@ -9,15 +9,14 @@
   // Super jank / prototype / proof-of-concept only, recommend using React component
   var onKeyUp = (value) => {
     var xhr = new XMLHttpRequest();
-    const url = "/search";
-    xhr.open("POST", url, true);
+    const url = `/search?query=${value}`;
+    xhr.open("GET", url);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
       if (value.length > 2) {
         if (xhr.readyState === 4 && xhr.status === 200) {
           var json = JSON.parse(xhr.responseText);
 
-          console.log(json)
           var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="m-1">${m.name}</div></a>`;
           var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="m-1">${t.name}</div></a>`;
 
@@ -27,8 +26,7 @@
       };
     };
 
-    var data = JSON.stringify({"query": value });
-    xhr.send(data);
+    xhr.send();
   };
 </script>
 
