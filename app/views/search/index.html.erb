@@ -3,14 +3,19 @@
     <%= search_field_tag :query, nil, autocomplete: "off", placeholder: "Search Machines, Tournaments ...", class: "form-control w-full", onkeyup: "onKeyUp(this.value)" %>
   <% end %>
 </div>
-<div id="autocomplete-results" class="absolute bg-white w-full"></div>
+<div id="autocomplete-results" class="bg-white w-full"></div>
 
 <script>
   // Super jank / prototype / proof-of-concept only, recommend using React component
   var onKeyUp = (value) => {
-    const url = `/search?query=${value}`;
+    if (value.length == 0) {
+      document.getElementById('autocomplete-results').innerHTML = "";
+      return;
+    };
 
+    console.log("test")
     var xhr = new XMLHttpRequest();
+    const url = `/search?query=${value}`;
     xhr.open("GET", url);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -18,8 +23,8 @@
         if (xhr.readyState === 4 && xhr.status === 200) {
           var json = JSON.parse(xhr.responseText);
 
-          var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="m-1">${m.name}</div></a>`;
-          var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="m-1">${t.name}</div></a>`;
+          var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="mb-1 mx-1">${m.name}</div></a>`;
+          var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="mb-1 mx-1">${t.name}</div></a>`;
 
           resultArray = [].concat(json.machines.map(buildMachineLine), json.tournaments.map(buildTournamentLine))
           document.getElementById('autocomplete-results').innerHTML = resultArray.join('');

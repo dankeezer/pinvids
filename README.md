@@ -30,8 +30,16 @@ Things you may want to cover:
     $ rake db:create
     $ rake db:migrate
     $ rake db:seed
-    
+
 ## Dev
 
     $ brew services start postgresql # if not started
-    $ ./bin/dev
+
+Add a Procfile.dev with:
+```
+web: bin/rails server -p 3000
+css: bin/rails tailwindcss:watch
+```
+
+    $ rails s #this works but...
+    $ ./bin/dev #this pulls in any CSS changes
