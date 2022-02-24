@@ -8,8 +8,9 @@
 <script>
   // Super jank / prototype / proof-of-concept only, recommend using React component
   var onKeyUp = (value) => {
-    var xhr = new XMLHttpRequest();
     const url = `/search?query=${value}`;
+
+    var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -30,18 +31,23 @@
   };
 </script>
 
-<div class="mt-6">
-  <h2>Machines (<%= @machines.count %>)</h2>
-  <ul class="mt-2">
-    <% @machines.each do |machine| %>
-      <li><%= link_to machine.name, machine %></li>
-    <% end %>
-  </ul>
 
-  <h2>Tournaments (<%= @tournaments.count %>)</h2>
-  <ul class="mt-2">
-    <% @tournaments.each do |tournament| %>
-      <li><%= link_to tournament.name, tournament %></li>
-    <% end %>
-  </ul>
-</div>
+<% if @machines.present? || @tournaments.present? %>
+  <div class="mt-6">
+    <h2>Machines (<%= @machines.count %>)</h2>
+    <ul class="mt-2">
+      <% @machines.each do |machine| %>
+        <li><%= link_to machine.name, machine %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mt-6">
+    <h2>Tournaments (<%= @tournaments.count %>)</h2>
+    <ul class="mt-2">
+      <% @tournaments.each do |tournament| %>
+        <li><%= link_to tournament.name, tournament %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
