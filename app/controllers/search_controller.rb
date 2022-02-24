@@ -1,10 +1,31 @@
 class SearchController < ApplicationController
   def index
-    return render unless params[:query].present?
+    @machines, @tournaments = [[],[]]
+    return render unless params["query"].present?
 
-    search = PgSearch.multisearch(params[:query])
-    @search_results = search.map { |s| s.searchable_type.constantize.find(s.searchable_id) }
+    @machines, @tournaments = search(params["query"])
 
-    render
+    if request.content_type == "application/json"
+      render json: {
+        machines: @machines,
+        tournaments: @tournaments
+      }.to_json
+    else
+      render # html
+    end
+  end
+
+  private
+
+  def search(query)
+    # Four DB queries is a lot for inline JS, we can cache it if there's a performance hit.
+
+    machines = Machine.where(["name ILIKE ?", "%#{query}%"])
+    tournaments = Tournament.where(["name ILIKE ?", "%#{query}%"])
+
+    machines += Machine.search(query)
+    tournaments += Tournament.search(query)
+
+    [machines.uniq.sort_by(&:name), tournaments.uniq.sort_by(&:event_started_at).reverse]
   end
 end
