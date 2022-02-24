@@ -1,7 +1,9 @@
 class Machine < ApplicationRecord
   include PgSearch::Model
-  multisearchable against: :name,
-                  using: :trigram
+  pg_search_scope :search,
+                  against: :name,
+                  using: [:trigram],
+                  ignoring: :accents
 
   has_many :matches
 

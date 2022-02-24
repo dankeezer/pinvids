@@ -7,21 +7,43 @@
 
 <script>
   // Super jank / prototype / proof-of-concept only, recommend using React component
-  const machines = <%= raw @machines_and_tournaments.to_json %>;
-  const buildLine = (result) => `<a href="/${result[0]}/${result[2]}"><div class="m-1">${result[1]}</div></a>`;
-  const onKeyUp = (value) => {
-    const filteredMachines = machines.filter(m => m[1].toLowerCase().includes(value.toLowerCase()));
-    document.getElementById('autocomplete-results').innerHTML = filteredMachines.map(buildLine).join('');
+  var onKeyUp = (value) => {
+    var xhr = new XMLHttpRequest();
+    const url = "/search";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (value.length > 2) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+
+          console.log(json)
+          var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="m-1">${m.name}</div></a>`;
+          var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="m-1">${t.name}</div></a>`;
+
+          resultArray = [].concat(json.machines.map(buildMachineLine), json.tournaments.map(buildTournamentLine))
+          document.getElementById('autocomplete-results').innerHTML = resultArray.join('');
+        };
+      };
+    };
+
+    var data = JSON.stringify({"query": value });
+    xhr.send(data);
   };
 </script>
 
 <div class="mt-6">
-  <% if @search_results.present? %>
-    <h2>All Results</h2>
-    <ul class="mt-2">
-      <% @search_results.each do |result| %>
-        <li><%= link_to result.name, result %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  <h2>Machines (<%= @machines.count %>)</h2>
+  <ul class="mt-2">
+    <% @machines.each do |machine| %>
+      <li><%= link_to machine.name, machine %></li>
+    <% end %>
+  </ul>
+
+  <h2>Tournaments (<%= @tournaments.count %>)</h2>
+  <ul class="mt-2">
+    <% @tournaments.each do |tournament| %>
+      <li><%= link_to tournament.name, tournament %></li>
+    <% end %>
+  </ul>
 </div>

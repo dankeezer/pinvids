@@ -1,7 +1,9 @@
 class Player < ApplicationRecord
   include PgSearch::Model
-  multisearchable against: [:first_name, :last_name]
-                  using: :trigram
+  pg_search_scope :search,
+                  against: [:first_name, :last_name],
+                  using: [:trigram],
+                  ignoring: :accents
 
   has_many :matches
 

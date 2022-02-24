@@ -1,11 +1,11 @@
 class Tournament < ApplicationRecord
   include PgSearch::Model
-  multisearchable against: :name,
-                  using: :trigram
-
+  pg_search_scope :search,
+                  against: :name,
+                  using: [:trigram],
+                  ignoring: :accents
 
   has_many :matches
-
 
   def video_url
     "https://youtu.be/#{video_id}"
