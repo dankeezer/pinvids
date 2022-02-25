@@ -69,6 +69,7 @@ group :development do
   # gem "spring"
 
   gem "pry"
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :test do
@@ -76,8 +77,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem "rspec"
-  gem "simplecov"
+  gem 'rspec-rails', '~> 5.0.0' # rubocop:disable Bundler/DuplicatedGem
+  gem "simplecov", require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec'
+  gem 'factory_bot'
 end

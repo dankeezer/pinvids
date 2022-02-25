@@ -6,6 +6,7 @@ AllCops:
     - 'db/**/*'
     - config.ru
     - 'config/**/*'
+    - 'spec/spec_helper.rb'
   TargetRubyVersion: 3.1
   NewCops: enable
 
