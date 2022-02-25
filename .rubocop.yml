@@ -5,7 +5,6 @@ AllCops:
     - 'bin/**/*'
     - 'db/**/*'
     - config.ru
-    - 'config/**/*'
   TargetRubyVersion: 3.1
   NewCops: enable
 
