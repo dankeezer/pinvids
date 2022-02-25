@@ -13,32 +13,32 @@ class MachinesController < ApplicationController
   end
 
   def new
-     @machine = Machine.new
+    @machine = Machine.new
   end
 
   def create
     @machine = Machine.new(machine_params)
 
     if @machine.save
-      redirect_to :action => 'index'
+      redirect_to action: 'index'
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
   def edit
-     @machine = Machine.find(params[:id])
+    @machine = Machine.find(params[:id])
 
-     render
+    render
   end
 
   def update
     @machine = Machine.find(params[:id])
 
     if @machine.update!(machine_params)
-      redirect_to :action => 'show', :id => @machine
+      redirect_to action: 'show', id: @machine
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 

@@ -14,10 +14,10 @@ class Tournament < ApplicationRecord
   def ifpa_url
     return "" if ifpa_id.blank?
 
-    "https://www.ifpapinball.com/tournaments/view.php?t=#{ifpa_id.to_s}#"
+    "https://www.ifpapinball.com/tournaments/view.php?t=#{ifpa_id}#"
   end
 
   def machines
-    matches.map { |m| m.machine }.uniq.sort_by(&:name)
+    matches.map(&:machine).uniq.sort_by(&:name)
   end
 end

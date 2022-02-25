@@ -12,11 +12,11 @@ class Match < ApplicationRecord
   validates :bracket, inclusion: { in: brackets.keys }
 
   def video_url
-    "#{tournament.video_url}?t=#{video_segment_start_time_in_seconds.to_s}"
+    "#{tournament.video_url}?t=#{video_segment_start_time_in_seconds}"
   end
 
   def video_embed_url
-    "https://www.youtube.com/embed/#{tournament.video_id}?start=#{video_segment_start_time_in_seconds.to_s}"
+    "https://www.youtube.com/embed/#{tournament.video_id}?start=#{video_segment_start_time_in_seconds}"
   end
 
   def video_segment_start_time_in_seconds

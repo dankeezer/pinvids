@@ -12,32 +12,32 @@ class TournamentsController < ApplicationController
   end
 
   def new
-     @tournament = Tournament.new
+    @tournament = Tournament.new
   end
 
   def create
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save
-      redirect_to :action => 'index'
+      redirect_to action: 'index'
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
   def edit
-     @tournament = Tournament.find(params[:id])
+    @tournament = Tournament.find(params[:id])
 
-     render
+    render
   end
 
   def update
     @tournament = Tournament.find(params[:id])
 
     if @tournament.update!(tournament_params)
-      redirect_to :action => 'show', :id => @tournament
+      redirect_to action: 'show', id: @tournament
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 

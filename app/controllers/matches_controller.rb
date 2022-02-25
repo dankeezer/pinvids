@@ -17,9 +17,8 @@ class MatchesController < ApplicationController
     if @match.save
       redirect_to tournament_path(@match.tournament_id)
     else
-      render :action => 'new'
+      render action: 'new'
     end
-
   end
 
   def edit
@@ -32,15 +31,21 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
 
     if @match.update!(match_params)
-      redirect_to :action => 'show', :id => @match
+      redirect_to action: 'show', id: @match
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
   private
 
   def match_params
-    params.require(:match).permit(:video_segment_start_time, :bracket, :invalidated, :machine_id, :tournament_id)
+    params.require(:match).permit(
+      :video_segment_start_time,
+      :bracket,
+      :invalidated,
+      :machine_id,
+      :tournament_id
+    )
   end
 end

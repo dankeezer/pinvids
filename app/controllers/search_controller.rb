@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-    return render unless params["query"].present?
+    return render if params["query"].blank?
 
     @machines, @tournaments = search(params["query"])
 
