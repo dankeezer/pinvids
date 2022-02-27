@@ -1,8 +1,12 @@
 FactoryBot.define do
   factory :tournament do
     name do
-      ([Faker::Time.backward(days: 2555).year] +
-        Faker::Hipster.words.map(&:capitalize)).join(" ")
+      [
+        Faker::Time.backward(days: 2555).year.to_s,
+        Faker::Nation.capital_city,
+        Faker::Hipster.word,
+        Match.brackets.keys[1..].sample.pluralize
+      ].map(&:capitalize).join(" ")
     end
     video_id { Faker::Alphanumeric.alphanumeric(number: 11) }
     video_host { ["youtube"].sample }
