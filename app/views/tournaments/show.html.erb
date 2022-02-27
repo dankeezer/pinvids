@@ -1,36 +1,36 @@
 <h1><%= @tournament.name %></h1>
 
-<p>
+<div class="mt-6">
   <ul>
     <li>Event Date: <%= @tournament.event_started_at.strftime("%b %d, %Y") -%></li>
     <li>Video: <%= link_to @tournament.video_url, @tournament.video_url -%></li>
     <li>Video Duration: <%= @tournament.video_duration %></li>
     <li>IFPA Tournament Page: <%= link_to @tournament.ifpa_url, @tournament.ifpa_url %></li>
   </ul>
-</p>
+</div>
 
-<h2>Matches</h2>
-<p>
+<h2 class="mt-6">Matches</h2>
+<div>
   <ul>
     <% @matches.each do |m| %>
       <li><%= link_to "#{m.video_segment_start_time} - #{m.machine.name}", tournament_match_path(m.tournament_id, m.id) -%></li>
     <% end %>
   </ul>
-</p>
+</div>
 
-<h2>Machines Featured</h2>
-<p>
+<div class="text-xl mt-6">Machines Featured</div>
+<div>
   <ul>
     <% @tournament.machines.each do |m| %>
       <li><%= link_to m.name, machine_path(m) -%></li>
     <% end %>
   </ul>
-</p>
+</div>
 
-<h2>Vids (<%= @matches.count %>)</h2>
+<div class="text-xl mt-6">Vids (<%= @matches.count %>)</div>
 <% @matches.each do |m| %>
   <%= link_to "#{m.video_segment_start_time} - #{m.machine.name}", m.video_url -%></br>
-  <div class="youtube-video-container">
+  <div class="flex mb-6 youtube-video-container">
     <iframe
       width="560"
       height="315"

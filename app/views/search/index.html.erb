@@ -1,8 +1,8 @@
-<div class="mt-6">
+
   <%= form_tag search_path, method: "get" do %>
     <%= search_field_tag :query, nil, autocomplete: "off", placeholder: "Search Machines, Tournaments ...", class: "form-control w-full", onkeyup: "onKeyUp(this.value)" %>
   <% end %>
-</div>
+
 <div id="autocomplete-results" class="bg-white w-full"></div>
 
 <script>
@@ -56,3 +56,5 @@
     </ul>
   </div>
 <% end %>
+
+<div class="flex flex-grow"></div>
