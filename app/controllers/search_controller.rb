@@ -17,7 +17,7 @@ class SearchController < ApplicationController
   private
 
   def search(query)
-    # Four DB queries is a lot for inline JS, we can cache it if there's a performance hit.
+    # Four DB queries is a lot for every keystroke; we can cache it if there's a performance hit.
 
     machines = Machine.where(["name ILIKE ?", "%#{query}%"])
     tournaments = Tournament.where(["name ILIKE ?", "%#{query}%"])

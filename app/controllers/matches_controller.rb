@@ -15,7 +15,7 @@ class MatchesController < ApplicationController
     @match = Match.new(match_params)
 
     if @match.save
-      redirect_to tournament_path(@match.tournament_id)
+      redirect_to tournament_path @match.tournament_id
     else
       render action: 'new'
     end

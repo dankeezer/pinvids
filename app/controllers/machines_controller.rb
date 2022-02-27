@@ -20,7 +20,7 @@ class MachinesController < ApplicationController
     @machine = Machine.new(machine_params)
 
     if @machine.save
-      redirect_to action: 'index'
+      redirect_to action: 'show', id: @machine
     else
       render action: 'new'
     end

@@ -77,9 +77,12 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem 'rspec-rails', '~> 5.0.0' # rubocop:disable Bundler/DuplicatedGem
-  gem "simplecov", require: false
-  gem 'rubocop-rails', require: false
+  gem 'rspec-rails', '~> 5.0.0'
+  gem "simplecov",          require: false
+  gem "simplecov-console",  require: false
+  gem 'rubocop-rails',      require: false
   gem 'rubocop-rspec'
   gem 'factory_bot'
+  gem 'faker'
+  gem "pry"
 end

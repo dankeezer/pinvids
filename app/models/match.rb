@@ -16,7 +16,8 @@ class Match < ApplicationRecord
   end
 
   def video_embed_url
-    "https://www.youtube.com/embed/#{tournament.video_id}?start=#{video_segment_start_time_in_seconds}"
+    "https://www.youtube.com/embed/#{tournament.video_id}?" \
+      "start=#{video_segment_start_time_in_seconds}"
   end
 
   def video_segment_start_time_in_seconds

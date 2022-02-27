@@ -19,7 +19,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save
-      redirect_to action: 'index'
+      redirect_to action: 'show', id: @tournament
     else
       render action: 'new'
     end
