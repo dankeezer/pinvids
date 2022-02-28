@@ -15,10 +15,7 @@
  */
 
 .youtube-video-container {
-  position: relative;
-  overflow: hidden;
   width: 100%;
-  margin-bottom: 1em;
 }
 
 @media (min-width:80em) {
@@ -35,7 +32,6 @@
 }
 
 .youtube-video-container iframe {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;

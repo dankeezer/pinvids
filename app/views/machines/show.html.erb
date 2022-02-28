@@ -27,7 +27,7 @@
 <div class="text-xl mt-6">Vids (<%= @matches.count %>)</div>
 <% @matches.each do |m| %>
   <%= link_to "#{m.tournament.name} - #{m.video_segment_start_time}", m.video_url -%></br>
-  <div class="youtube-video-container">
+  <div class="flex mb-6 youtube-video-container">
     <iframe
       width="560"
       height="315"

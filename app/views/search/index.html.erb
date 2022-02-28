@@ -1,25 +1,21 @@
-<div class="mt-6">
+<div class="relative">
   <%= form_tag search_path, method: "get" do %>
     <%= search_field_tag :query, nil, autocomplete: "off", placeholder: "Search Machines, Tournaments ...", class: "form-control w-full", onkeyup: "onKeyUp(this.value)" %>
   <% end %>
+  <div id="autocomplete-results" class="bg-white absolute w-full"></div>
 </div>
-<div id="autocomplete-results" class="bg-white w-full"></div>
 
 <script>
   // Super jank / prototype / proof-of-concept only, recommend using React component
   var onKeyUp = (value) => {
-    if (value.length == 0) {
-      document.getElementById('autocomplete-results').innerHTML = "";
-      return;
-    };
+    if (value.length == 0) { clearAutoComplete(); };
 
-    console.log("test")
     var xhr = new XMLHttpRequest();
     const url = `/search?query=${value}`;
     xhr.open("GET", url);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
-      if (value.length > 2) {
+      if (value.length > 1) {
         if (xhr.readyState === 4 && xhr.status === 200) {
           var json = JSON.parse(xhr.responseText);
 
@@ -34,6 +30,11 @@
 
     xhr.send();
   };
+
+  function clearAutoComplete() {
+    document.getElementById('autocomplete-results').innerHTML = "";
+    return;
+  }
 </script>
 
 
@@ -56,3 +57,5 @@
     </ul>
   </div>
 <% end %>
+
+<div class="flex flex-grow"></div>
