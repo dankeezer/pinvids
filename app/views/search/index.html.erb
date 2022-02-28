@@ -5,7 +5,8 @@
                                      class: "form-control w-full", 
                                      onkeyup: "onKeyUp(this.value)",
                                      onblur: "onBlur()",
-                                     onFocus: "onFocus()" %>
+                                     onFocus: "onFocus()",
+                                     onSearch: "onSearch(this)" %>
   <% end %>
   <div id="autocomplete-results" class="bg-white absolute w-full"></div>
 </div>
@@ -34,6 +35,12 @@
   }
   var onFocus = () => {
     autoCompleteResults.style.display = "block";
+  }
+  // For the "[x]" on the right of the search bar:
+  var onSearch = (input) => {
+    if (input.value === "") {
+      onBlur();
+    }
   }
 </script>
 
