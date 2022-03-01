@@ -4,8 +4,8 @@
                                      placeholder: "Search Machines, Tournaments ...", 
                                      class: "form-control w-full", 
                                      onkeyup: "onKeyUp(this.value)",
-                                     onblur: "onBlur()",
-                                     onFocus: "onFocus()",
+                                     onblur: "setTimeout(hideDropdown, 300);", # heh heh heh
+                                     onFocus: "showDropdown()",
                                      onSearch: "onSearch(this)" %>
   <% end %>
   <div id="autocomplete-results" class="bg-white absolute w-full"></div>
@@ -15,11 +15,14 @@
   var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="mb-1 mx-1">${m.name}</div></a>`;
   var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="mb-1 mx-1">${t.name}</div></a>`;
   var autoCompleteResults = document.getElementById('autocomplete-results');
+  var showDropdown = () => autoCompleteResults.style.display = "block";
+  var hideDropdown = () => autoCompleteResults.style.display = "none";
   var onKeyUp = (value) => {
     if (value.length == 0) { 
       autoCompleteResults.innerHTML = "";
       return;
     }
+    showDropdown();
     fetch(`/search?query=${value}`, {
       headers: {
         "Content-Type":  "application/json"
@@ -30,17 +33,9 @@
         autoCompleteResults.innerHTML = resultArray.join('');
       });
   };
-  var onBlur = () => {
-    autoCompleteResults.style.display = "none";
-  }
-  var onFocus = () => {
-    autoCompleteResults.style.display = "block";
-  }
   // For the "[x]" on the right of the search bar:
   var onSearch = (input) => {
-    if (input.value === "") {
-      onBlur();
-    }
+    input.value === "" ? hideDropdown() : showDropdown()
   }
 </script>
 
