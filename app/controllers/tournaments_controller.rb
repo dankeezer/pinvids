@@ -6,7 +6,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
-    @matches = Match.where(tournament_id: params[:id]).sort_by(&:video_segment_start_time)
+    @matches = @tournament.matches.sort_by(&:video_segment_start_time)
 
     render
   end
@@ -18,7 +18,7 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.new(tournament_params)
 
-    if @tournament.save
+    if @tournament.save!
       redirect_to action: 'show', id: @tournament
     else
       render action: 'new'
@@ -37,7 +37,7 @@ class TournamentsController < ApplicationController
     if @tournament.update!(tournament_params)
       redirect_to action: 'show', id: @tournament
     else
-      render action: 'edit'
+      render :edit, status: :unprocessable_entity
     end
   end
 

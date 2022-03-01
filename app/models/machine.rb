@@ -8,6 +8,8 @@ class Machine < ApplicationRecord
   has_many :matches
   has_many :tournaments, through: :matches
 
+  validates :name, presence: true
+
   def ipdb_url
     return "" if ipdb_id.blank?
 

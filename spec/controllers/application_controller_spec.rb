@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationController do
+describe ApplicationController do
 end

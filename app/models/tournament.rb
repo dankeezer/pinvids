@@ -8,6 +8,12 @@ class Tournament < ApplicationRecord
   has_many :matches
   has_many :machines, through: :matches
 
+  validates :name,              presence: true
+  validates :video_id,          presence: true
+  validates :video_host,        presence: true
+  validates :video_duration,    presence: true
+  validates :event_started_at,  presence: true
+
   def video_url
     "https://youtu.be/#{video_id}"
   end

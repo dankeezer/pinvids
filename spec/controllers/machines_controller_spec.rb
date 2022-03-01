@@ -1,7 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe 'Machine', type: :request do
-  let!(:machines) { create_list(:machine, 3) }
+describe 'Machine', type: :request do
+  let!(:tournaments) { create_list(:tournament, 5) }
+  let!(:machines) { create_list(:machine, 5) }
+  let!(:matches) { Match.all }
+
+  before do
+    3.times do
+      create(
+        :match,
+        machine_id: machines.first.id,
+        tournament_id: tournaments.sample.id
+      )
+    end
+  end
+
   let!(:new_name) { Faker::Superhero.name }
 
   describe '#index' do
@@ -19,6 +32,13 @@ RSpec.describe 'Machine', type: :request do
 
       expect(response).to have_http_status(200)
       expect(response.body).to include(machines.last.name)
+    end
+
+    it "responds with a list of matches" do
+      get machine_path(machines.first)
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include(matches.last.tournament.name)
     end
   end
 

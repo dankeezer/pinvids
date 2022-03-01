@@ -6,7 +6,7 @@ class MachinesController < ApplicationController
 
   def show
     @machine = Machine.find(params[:id])
-    @matches = Match.where(machine_id: params[:id]).
+    @matches = @machine.matches.
       sort_by { |m| [m.tournament_id, m.video_segment_start_time] }
 
     render
@@ -19,7 +19,7 @@ class MachinesController < ApplicationController
   def create
     @machine = Machine.new(machine_params)
 
-    if @machine.save
+    if @machine.save!
       redirect_to action: 'show', id: @machine
     else
       render action: 'new'

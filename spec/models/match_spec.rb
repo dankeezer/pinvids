@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Match, type: :model do
+describe Match, type: :model do
   let!(:tournament) { create(:tournament) }
   let!(:machine) { create(:machine) }
   let!(:match) { build(:match, machine_id: machine.id, tournament_id: tournament.id) }
