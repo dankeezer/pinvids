@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Match', type: :request do
+describe 'Match', type: :request do
   let!(:tournaments) { create_list(:tournament, 5) }
   let!(:machines) { create_list(:machine, 5) }
   let!(:matches) { Match.all }
@@ -22,7 +22,11 @@ RSpec.describe 'Match', type: :request do
   end
 
   describe '#index' do
-    xit "responds with all matches as @matches" do
+    it "responds with a link to create a new match" do
+      get tournament_matches_path
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("New Match")
     end
   end
 
@@ -37,8 +41,8 @@ RSpec.describe 'Match', type: :request do
   end
 
   describe '#new' do
-    xit "responds with a new match form" do
-      get new_match_path
+    it "responds with a new match form" do
+      get new_tournament_match_path
 
       expect(response).to have_http_status(200)
       expect(response.body).to include("New Match")
@@ -46,38 +50,47 @@ RSpec.describe 'Match', type: :request do
   end
 
   describe '#edit' do
-    xit "responds with an edit match form for @match" do
-      get edit_match_path(matches.last)
+    it "responds with an edit match form for @match" do
+      get edit_tournament_match_path(matches.last)
 
       expect(response).to have_http_status(200)
-      expect(response.body).to include(matches.last.name)
+      expect(response.body).to include(matches.id)
     end
   end
 
   describe '#create' do
     describe "with valid params" do
-      xit "responds with a newly created match as @match" do
-        post matches_path(match: { name: new_name })
-        expect(Match.last.name).to eq(new_name)
+      it "responds with a newly created match as @match" do
+        post tournament_matches_path(
+          match: { machine_id: machines.sample.id, tournament_id: tournaments.sample.id }
+        )
+
+        expect(Match.count).to eq 4
       end
 
-      xit "redirects to the created match" do
-        post matches_path(match: { name: new_name })
-        expect(response).to redirect_to(Match.last)
+      it "redirects to the created match" do
+        post tournament_matches_path(
+          match: { machine_id: machines.sample.id, tournament_id: tournaments.sample.id }
+        )
+        expect(response).to redirect_to(Match.last.tournament)
       end
     end
   end
 
   describe '#update' do
     describe "with valid params" do
-      xit "updates the requested match" do
-        patch match_path(matches.first, match: { name: new_name })
-        expect(Match.first.name).to eq(new_name)
+      it "updates the requested match" do
+        patch tournament_match_path(
+          matches.first.tournament.id, matches.first.id, match: { video_segment_start_time: "00:59:01" }
+        )
+        expect(Match.first.video_segment_start_time).to eq("00:59:01")
       end
 
-      xit "redirects to the updated match" do
-        patch match_path(matches.first, match: { name: new_name })
-        expect(response).to redirect_to(Match.first)
+      it "redirects to the updated match" do
+        patch tournament_match_path(
+          matches.first.tournament.id, matches.first.id, match: { video_segment_start_time: "00:59:01" }
+        )
+        expect(response).to redirect_to(tournament_match_path(matches.first.tournament.id, matches.first.id))
       end
     end
   end

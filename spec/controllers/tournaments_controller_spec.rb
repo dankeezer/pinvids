@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Tournament', type: :request do
+describe 'Tournament', type: :request do
   let!(:tournaments) { create_list(:tournament, 3) }
   let!(:new_name) do
     ([Faker::Time.backward(days: 2555).year] +
