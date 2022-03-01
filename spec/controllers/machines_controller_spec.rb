@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Machine', type: :request do
-  let!(:tournaments) { create_list(:tournament, 5) }
   let!(:machines) { create_list(:machine, 5) }
+  let!(:tournaments) { create_list(:tournament, 5) }
   let!(:matches) { Match.all }
 
   before do
@@ -15,7 +15,7 @@ describe 'Machine', type: :request do
     end
   end
 
-  let!(:new_name) { Faker::Superhero.name }
+  let(:params) { attributes_for(:machine) }
 
   describe '#index' do
     it "responds with all machines as @machines" do
@@ -38,7 +38,7 @@ describe 'Machine', type: :request do
       get machine_path(machines.first)
 
       expect(response).to have_http_status(200)
-      expect(response.body).to include(matches.last.tournament.name)
+      expect(response.body).to include(matches.last.machine.name)
     end
   end
 
@@ -63,13 +63,21 @@ describe 'Machine', type: :request do
   describe '#create' do
     describe "with valid params" do
       it "responds with a newly created machine as @machine" do
-        post machines_path(machine: { name: new_name })
-        expect(Machine.last.name).to eq(new_name)
+        post machines_path(machine: params)
+        expect(Machine.last.name).to eq(params[:name])
       end
 
       it "redirects to the created machine" do
-        post machines_path(machine: { name: new_name })
+        post machines_path(machine: params)
         expect(response).to redirect_to(Machine.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "renders to the new machine page with errors" do
+        post machines_path(machine: params.except(:name))
+        expect(response.body).to include(CGI.escape_html("Name can't be blank"))
+        expect(response.body).to include("New Machine")
       end
     end
   end
@@ -77,13 +85,21 @@ describe 'Machine', type: :request do
   describe '#update' do
     describe "with valid params" do
       it "updates the requested machine" do
-        patch machine_path(machines.first, machine: { name: new_name })
-        expect(Machine.first.name).to eq(new_name)
+        patch machine_path(machines.first, machine: params)
+        expect(Machine.first.name).to eq(params[:name])
       end
 
       it "redirects to the updated machine" do
-        patch machine_path(machines.first, machine: { name: new_name })
+        patch machine_path(machines.first, machine: params)
         expect(response).to redirect_to(Machine.first)
+      end
+    end
+
+    describe "with invalid params" do
+      it "renders to the same edit machine page with errors" do
+        patch machine_path(machines.first, machine: { name: nil })
+        expect(response.body).to include(CGI.escape_html("Name can't be blank"))
+        expect(response.body).to include("Edit #{machines.first.name}")
       end
     end
   end

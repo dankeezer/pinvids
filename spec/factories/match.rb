@@ -4,9 +4,9 @@ FactoryBot.define do
     machine
 
     video_segment_start_time { [rand(10), rand(60), rand(60)].join(":") }
-    bracket { rand(4) }
+    bracket { Match.brackets.keys.sample }
     invalidated { [true, false].sample }
-    tournament_id { rand(10) }
-    machine_id { rand(10) }
+    tournament_id { rand(1..3) }
+    machine_id { rand(1..3) }
   end
 end

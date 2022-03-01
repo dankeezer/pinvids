@@ -1,4 +1,6 @@
-<h1>Match <%= @match.id %></h1>
+<%= render "layouts/messages" %>
+
+<h1>Edit Match <%= @match.id %></h1>
 
 <%= form_with model: @match, url: tournament_match_path do |form| %>
   <p>Tournament: <%= form.collection_select :tournament_id, Tournament.order(:name), :id, :name %>

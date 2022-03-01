@@ -54,10 +54,10 @@ describe 'Tournament', type: :request do
     end
 
     describe "with invalid params" do
-      it "renders to the create tournament page" do
-        expect do
-          post tournaments_path(tournament: params.except(:name))
-        end.to raise_error "Validation failed: Name can't be blank"
+      it "renders to the new tournament page with errors" do
+        post tournaments_path(tournament: params.except(:name))
+        expect(response.body).to include(CGI.escape_html("Name can't be blank"))
+        expect(response.body).to include("New Tournament")
       end
     end
   end
@@ -76,10 +76,10 @@ describe 'Tournament', type: :request do
     end
 
     describe "with invalid params" do
-      it "renders to the same edit tournament page" do
-        expect do
-          patch tournament_path(tournaments.first, tournament: { name: nil })
-        end.to raise_error "Validation failed: Name can't be blank"
+      it "renders to the same edit tournament page with errors" do
+        patch tournament_path(tournaments.first, tournament: { name: nil })
+        expect(response.body).to include(CGI.escape_html("Name can't be blank"))
+        expect(response.body).to include("Edit #{tournaments.first.name}")
       end
     end
   end

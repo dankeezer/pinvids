@@ -9,6 +9,10 @@ class Match < ApplicationRecord
     semifinal: 3,
     final: 4
   }
+
+  validates :machine_id, presence: true
+  validates :tournament_id, presence: true
+  validates :video_segment_start_time, presence: true
   validates :bracket, inclusion: { in: brackets.keys }
 
   def video_url

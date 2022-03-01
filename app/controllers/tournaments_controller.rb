@@ -18,10 +18,11 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.new(tournament_params)
 
-    if @tournament.save!
+    if @tournament.save
       redirect_to action: 'show', id: @tournament
     else
-      render action: 'new'
+      flash.now[:messages] = @tournament.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -34,10 +35,12 @@ class TournamentsController < ApplicationController
   def update
     @tournament = Tournament.find(params[:id])
 
-    if @tournament.update!(tournament_params)
+    if @tournament.update(tournament_params)
       redirect_to action: 'show', id: @tournament
     else
-      render :edit, status: :unprocessable_entity
+      flash.now[:messages] = @tournament.errors.full_messages
+      @tournament = Tournament.find(params[:id])
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 

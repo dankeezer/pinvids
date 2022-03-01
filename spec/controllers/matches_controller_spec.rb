@@ -15,6 +15,14 @@ describe 'Match', type: :request do
     end
   end
 
+  let(:params) do
+    attributes_for(
+      :match,
+      machine_id: machines.map(&:id).sample,
+      tournament_id: tournaments.map(&:id).sample
+    )
+  end
+
   it "fun message for fun" do
     print "\n\nIn today's tests we're playing:\n"
     matches.each { |m| print "\n#{m.machine.name} at #{m.tournament.name}" }
@@ -61,18 +69,25 @@ describe 'Match', type: :request do
   describe '#create' do
     describe "with valid params" do
       it "responds with a newly created match as @match" do
-        post tournament_matches_path(Match.last.tournament.id,
-                                     match: { tournament_id: tournaments.sample.id,
-                                              machine_id: machines.sample.id })
+        post tournament_matches_path(Match.last.tournament.id, match: params)
 
         expect(Match.count).to eq 4
       end
 
       it "redirects to the created match" do
-        post tournament_matches_path(Match.first.tournament.id,
-                                     match: { tournament_id: tournaments.sample.id,
-                                              machine_id: machines.sample.id })
+        post tournament_matches_path(Match.first.tournament.id, match: params)
         expect(response).to redirect_to(Match.last.tournament)
+      end
+    end
+
+    describe "with invalid params" do
+      it "renders to the new match page with errors" do
+        post tournament_matches_path(
+          Match.last.tournament.id,
+          match: params.except(:video_segment_start_time)
+        )
+        expect(response.body).to include(CGI.escape_html("Video segment start time can't be blank"))
+        expect(response.body).to include("New Match")
       end
     end
   end
@@ -83,19 +98,32 @@ describe 'Match', type: :request do
         patch tournament_match_path(
           matches.first.tournament.id,
           matches.first.id,
-          match: { video_segment_start_time: "00:59:01" }
+          match: params
         )
-        expect(Match.first.video_segment_start_time).to eq("00:59:01")
+        expect(Match.first.video_segment_start_time).to eq(params[:video_segment_start_time])
       end
 
       it "redirects to the updated match" do
         patch tournament_match_path(
           matches.first.tournament.id,
           matches.first.id,
-          match: { video_segment_start_time: "00:59:01" }
+          match: params
         )
-        expect(response).to redirect_to(tournament_match_path(matches.first.tournament.id,
-                                                              matches.first.id))
+        expect(response).to redirect_to(
+          tournament_match_path(matches.first.tournament.id, matches.first.id)
+        )
+      end
+    end
+
+    describe "with invalid params" do
+      it "renders to the same edit match page with errors" do
+        patch tournament_match_path(
+          matches.first.tournament.id,
+          matches.first.id,
+          match: { video_segment_start_time: nil }
+        )
+        expect(response.body).to include(CGI.escape_html("Video segment start time can't be blank"))
+        expect(response.body).to include("Edit Match #{matches.first.id}")
       end
     end
   end

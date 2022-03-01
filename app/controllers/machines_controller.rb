@@ -19,10 +19,11 @@ class MachinesController < ApplicationController
   def create
     @machine = Machine.new(machine_params)
 
-    if @machine.save!
+    if @machine.save
       redirect_to action: 'show', id: @machine
     else
-      render action: 'new'
+      flash.now[:messages] = @machine.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -35,10 +36,12 @@ class MachinesController < ApplicationController
   def update
     @machine = Machine.find(params[:id])
 
-    if @machine.update!(machine_params)
+    if @machine.update(machine_params)
       redirect_to action: 'show', id: @machine
     else
-      render action: 'edit'
+      flash.now[:messages] = @machine.errors.full_messages
+      @machine = Machine.find(params[:id])
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 

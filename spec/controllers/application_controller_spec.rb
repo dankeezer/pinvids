@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe ApplicationController do
+describe ApplicationController do # rubocop:disable Lint/EmptyBlock
 end

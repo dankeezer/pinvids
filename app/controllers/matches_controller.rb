@@ -14,10 +14,11 @@ class MatchesController < ApplicationController
   def create
     @match = Match.new(match_params)
 
-    if @match.save!
+    if @match.save
       redirect_to tournament_path @match.tournament_id
     else
-      render action: 'new'
+      flash.now[:messages] = @match.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -30,10 +31,12 @@ class MatchesController < ApplicationController
   def update
     @match = Match.find(params[:id])
 
-    if @match.update!(match_params)
+    if @match.update(match_params)
       redirect_to action: 'show', id: @match
     else
-      render action: 'edit'
+      flash.now[:messages] = @match.errors.full_messages
+      @match = Match.find(params[:id])
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 

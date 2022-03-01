@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Ball do
+describe Ball do # rubocop:disable Lint/EmptyBlock
 end
