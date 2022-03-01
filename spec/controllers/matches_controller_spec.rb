@@ -18,8 +18,8 @@ describe 'Match', type: :request do
   let(:params) do
     attributes_for(
       :match,
-      machine_id: machines.map(&:id).sample,
-      tournament_id: tournaments.map(&:id).sample
+      machine_id: machines.sample.id,
+      tournament_id: tournaments.sample.id
     )
   end
 
