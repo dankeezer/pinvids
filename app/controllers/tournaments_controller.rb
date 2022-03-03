@@ -6,38 +6,41 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
-    @matches = Match.where(tournament_id: params[:id]).sort_by(&:video_segment_start_time)
+    @matches = @tournament.matches.sort_by(&:video_segment_start_time)
 
     render
   end
 
   def new
-     @tournament = Tournament.new
+    @tournament = Tournament.new
   end
 
   def create
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save
-      redirect_to :action => 'index'
+      redirect_to action: 'show', id: @tournament
     else
-      render :action => 'new'
+      flash.now[:messages] = @tournament.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
   def edit
-     @tournament = Tournament.find(params[:id])
+    @tournament = Tournament.find(params[:id])
 
-     render
+    render
   end
 
   def update
     @tournament = Tournament.find(params[:id])
 
-    if @tournament.update!(tournament_params)
-      redirect_to :action => 'show', :id => @tournament
+    if @tournament.update(tournament_params)
+      redirect_to action: 'show', id: @tournament
     else
-      render :action => 'edit'
+      flash.now[:messages] = @tournament.errors.full_messages
+      @tournament = Tournament.find(params[:id])
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 

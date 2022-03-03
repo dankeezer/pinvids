@@ -1,4 +1,6 @@
-<h1><%= @machine.name %></h1>
+<%= render "layouts/messages" %>
+
+<h1>Edit <%= @machine.name %></h1>
 
 <%= form_with model: @machine do |form| %>
   <p>Name: <%= form.text_field :name %></p>

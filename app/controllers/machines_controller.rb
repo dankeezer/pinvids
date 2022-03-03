@@ -6,39 +6,42 @@ class MachinesController < ApplicationController
 
   def show
     @machine = Machine.find(params[:id])
-    @matches = Match.where(machine_id: params[:id]).
+    @matches = @machine.matches.
       sort_by { |m| [m.tournament_id, m.video_segment_start_time] }
 
     render
   end
 
   def new
-     @machine = Machine.new
+    @machine = Machine.new
   end
 
   def create
     @machine = Machine.new(machine_params)
 
     if @machine.save
-      redirect_to :action => 'index'
+      redirect_to action: 'show', id: @machine
     else
-      render :action => 'new'
+      flash.now[:messages] = @machine.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
   def edit
-     @machine = Machine.find(params[:id])
+    @machine = Machine.find(params[:id])
 
-     render
+    render
   end
 
   def update
     @machine = Machine.find(params[:id])
 
-    if @machine.update!(machine_params)
-      redirect_to :action => 'show', :id => @machine
+    if @machine.update(machine_params)
+      redirect_to action: 'show', id: @machine
     else
-      render :action => 'edit'
+      flash.now[:messages] = @machine.errors.full_messages
+      @machine = Machine.find(params[:id])
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 

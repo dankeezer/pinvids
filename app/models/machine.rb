@@ -6,15 +6,13 @@ class Machine < ApplicationRecord
                   ignoring: :accents
 
   has_many :matches
+  has_many :tournaments, through: :matches
 
+  validates :name, presence: true
 
   def ipdb_url
     return "" if ipdb_id.blank?
 
-    "https://www.ipdb.org/machine.cgi?id=#{ipdb_id.to_s}#"
-  end
-
-  def tournaments
-    matches.map { |m| m.tournament }.uniq.sort_by(&:name)
+    "https://www.ipdb.org/machine.cgi?id=#{ipdb_id}#"
   end
 end

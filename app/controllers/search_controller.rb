@@ -1,8 +1,8 @@
 class SearchController < ApplicationController
   def index
-    return render unless params["query"].present?
+    return render if params["query"].blank?
 
-    @machines, @tournaments = search(params["query"])
+    @machines, @tournaments = new_search(params["query"])
 
     if request.content_type == "application/json"
       render json: {
@@ -10,14 +10,14 @@ class SearchController < ApplicationController
         tournaments: @tournaments
       }.to_json
     else
-      render # html
+      render
     end
   end
 
   private
 
-  def search(query)
-    # Four DB queries is a lot for inline JS, we can cache it if there's a performance hit.
+  def new_search(query)
+    # Four DB queries is a lot for every keystroke; we can cache it if there's a performance hit.
 
     machines = Machine.where(["name ILIKE ?", "%#{query}%"])
     tournaments = Tournament.where(["name ILIKE ?", "%#{query}%"])

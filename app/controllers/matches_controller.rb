@@ -15,11 +15,11 @@ class MatchesController < ApplicationController
     @match = Match.new(match_params)
 
     if @match.save
-      redirect_to tournament_path(@match.tournament_id)
+      redirect_to tournament_path @match.tournament_id
     else
-      render :action => 'new'
+      flash.now[:messages] = @match.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
-
   end
 
   def edit
@@ -31,16 +31,24 @@ class MatchesController < ApplicationController
   def update
     @match = Match.find(params[:id])
 
-    if @match.update!(match_params)
-      redirect_to :action => 'show', :id => @match
+    if @match.update(match_params)
+      redirect_to action: 'show', id: @match
     else
-      render :action => 'edit'
+      flash.now[:messages] = @match.errors.full_messages
+      @match = Match.find(params[:id])
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 
   private
 
   def match_params
-    params.require(:match).permit(:video_segment_start_time, :bracket, :invalidated, :machine_id, :tournament_id)
+    params.require(:match).permit(
+      :video_segment_start_time,
+      :bracket,
+      :invalidated,
+      :machine_id,
+      :tournament_id
+    )
   end
 end

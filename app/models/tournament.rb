@@ -6,6 +6,13 @@ class Tournament < ApplicationRecord
                   ignoring: :accents
 
   has_many :matches
+  has_many :machines, through: :matches
+
+  validates :name,              presence: true
+  validates :video_id,          presence: true
+  validates :video_host,        presence: true
+  validates :video_duration,    presence: true
+  validates :event_started_at,  presence: true
 
   def video_url
     "https://youtu.be/#{video_id}"
@@ -14,10 +21,6 @@ class Tournament < ApplicationRecord
   def ifpa_url
     return "" if ifpa_id.blank?
 
-    "https://www.ifpapinball.com/tournaments/view.php?t=#{ifpa_id.to_s}#"
-  end
-
-  def machines
-    matches.map { |m| m.machine }.uniq.sort_by(&:name)
+    "https://www.ifpapinball.com/tournaments/view.php?t=#{ifpa_id}#"
   end
 end
