@@ -15,8 +15,8 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
+# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem "jsbundling-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
@@ -52,10 +52,13 @@ gem "bootsnap", require: false
 
 gem "tailwindcss-rails", "~> 2.0"
 gem 'pg_search', "~> 2.3"
+gem 'jsbundling-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "pry"
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
@@ -67,9 +70,6 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-
-  gem "pry"
-  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :test do
@@ -77,12 +77,10 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem 'rspec-rails', '~> 5.0.0'
   gem "simplecov",          require: false
   gem "simplecov-console",  require: false
   gem 'rubocop-rails',      require: false
   gem 'rubocop-rspec'
   gem 'factory_bot'
   gem 'faker'
-  gem "pry"
 end

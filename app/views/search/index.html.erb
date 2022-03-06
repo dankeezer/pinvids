@@ -1,44 +1,16 @@
 <div class="relative">
   <%= form_tag search_path, method: "get" do %>
-    <%= search_field_tag :query, nil, autocomplete: "off", 
-                                     placeholder: "Search Machines, Tournaments ...", 
-                                     class: "form-control w-full", 
+    <%= search_field_tag :query, nil, autocomplete: "off",
+                                     placeholder: "Search Machines, Tournaments ...",
+                                     class: "form-control w-full",
                                      onkeyup: "onKeyUp(this.value)",
-                                     onblur: "setTimeout(hideDropdown, 300);", # heh heh heh
+                                     onblur: "setTimeout(hideDropdown, 300);",
                                      onFocus: "showDropdown()",
                                      onSearch: "onSearch(this)" %>
   <% end %>
   <div id="autocomplete-results" class="bg-white absolute w-full"></div>
+  <hello-component/>
 </div>
-
-<script>
-  var buildMachineLine = (m) => `<a href="/machines/${m.id}"><div class="mb-1 mx-1">${m.name}</div></a>`;
-  var buildTournamentLine = (t) => `<a href="/tournaments/${t.id}"><div class="mb-1 mx-1">${t.name}</div></a>`;
-  var autoCompleteResults = document.getElementById('autocomplete-results');
-  var showDropdown = () => autoCompleteResults.style.display = "block";
-  var hideDropdown = () => autoCompleteResults.style.display = "none";
-  var onKeyUp = (value) => {
-    if (value.length == 0) { 
-      autoCompleteResults.innerHTML = "";
-      return;
-    }
-    showDropdown();
-    fetch(`/search?query=${value}`, {
-      headers: {
-        "Content-Type":  "application/json"
-      }
-    }).then(response => response.json())
-      .then(json => {
-        resultArray = [].concat(json.machines.map(buildMachineLine), json.tournaments.map(buildTournamentLine))
-        autoCompleteResults.innerHTML = resultArray.join('');
-      });
-  };
-  // For the "[x]" on the right of the search bar:
-  var onSearch = (input) => {
-    input.value === "" ? hideDropdown() : showDropdown()
-  }
-</script>
-
 
 <% if @machines.present? || @tournaments.present? %>
   <div class="mt-6">
